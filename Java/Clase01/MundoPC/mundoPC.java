@@ -1,0 +1,20 @@
+
+public class mundoPC {
+    public static void main(String[] args) {
+        //Creación de objetos
+        Monitor monitor1 = new Monitor("Dell", 27.0);
+        Raton raton1 = new Raton("USB", "Logitech");
+        Teclado teclado1 = new Teclado("Bluetooth", "Microsoft");
+        Computadora computadora1 = new Computadora("Computadora1", monitor1, teclado1, raton1);
+
+        Monitor monitor2 = new Monitor("Samsung", 24.0);
+        Raton raton2 = new Raton("Bluetooth", "Redragon");
+        Teclado teclado2 = new Teclado("USB", "HyperX");
+        Computadora computadora2 = new Computadora("Computadora2", monitor2, teclado2, raton2);
+        
+        Orden orden1 = new Orden();
+        orden1.agregarComputadora(computadora1);
+        orden1.agregarComputadora(computadora2);
+        orden1.mostrarOrden();
+    }
+}
