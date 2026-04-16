@@ -1,12 +1,12 @@
 package Java.Clase02;
 
-import Java.Clase02.Persona;
+public class BloqueDinamico {
 
-public class TestBloqueInicializacion {
     public static void main(String[] args) {
-        Persona persona1 = new Persona();
+        PersonaBloqueDinamico persona1 = new PersonaBloqueDinamico();
         System.out.println("Persona1 = " + persona1);
-        Persona persona2 = new Persona();
+
+        PersonaBloqueDinamico persona2 = new PersonaBloqueDinamico();
         System.out.println("Persona2 = " + persona2);
     }
 }

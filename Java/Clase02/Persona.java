@@ -8,7 +8,7 @@ public class Persona {
     static { // Bloque de inicialización estático
         System.out.println("Ejecucion del bloque estatico");
         ++Persona.contadorPersonas; 
-        //  idPersona = 10; // No se estatico por esto tenemos error
+        // idPersona = 10; // No se estatico por esto tenemos error
     }
 
     { //Bloque de inicializacion NO estatico (contexto dinamico)
