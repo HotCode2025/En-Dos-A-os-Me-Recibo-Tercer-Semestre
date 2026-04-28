@@ -1,0 +1,20 @@
+public class Teclado extends DispositivoEntrada {
+    private final int idTeclado;
+    private static int contadorTeclados;
+
+    public Teclado(String tipoEntrada, String marca) {
+        super(tipoEntrada, marca);
+        this.idTeclado = ++contadorTeclados;
+    }
+
+    //  POLIMORFISMO
+    @Override
+    public String tipoDispositivo() {
+        return "Soy un teclado";
+    }
+
+    @Override
+    public String toString() {
+        return "Teclado{idTeclado=" + this.idTeclado + ", " + super.toString() + "}";
+    }
+}
