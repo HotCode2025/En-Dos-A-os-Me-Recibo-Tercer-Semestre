@@ -1,0 +1,54 @@
+public class Computadora {
+    private static int contadorComputadoras = 0;
+
+    private final int idComputadora;
+    private String nombre;
+    private Monitor monitor;
+    private Teclado teclado;
+    private Raton raton;
+
+    public Computadora() {
+        this.idComputadora = ++contadorComputadoras;
+    }
+
+    public Computadora(String nombre, Monitor monitor, Teclado teclado, Raton raton) {
+        this();
+        this.nombre = nombre;
+        this.monitor = monitor;
+        this.teclado = teclado;
+        this.raton = raton;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
+
+    public void setTeclado(Teclado teclado) {
+        this.teclado = teclado;
+    }
+
+    public void setRaton(Raton raton) {
+        this.raton = raton;
+    }
+
+    //  MÉTODO POLIMÓRFICO
+    public void mostrarDispositivos() {
+        DispositivoEntrada d1 = this.teclado;
+        DispositivoEntrada d2 = this.raton;
+
+        System.out.println(d1.tipoDispositivo());
+        System.out.println(d2.tipoDispositivo());
+    }
+
+    @Override
+    public String toString() {
+        return "Computadora{id=" + idComputadora + ", nombre=" + nombre +
+                ", monitor=" + monitor +
+                ", teclado=" + teclado +
+                ", raton=" + raton + "}";
+    }
+}
