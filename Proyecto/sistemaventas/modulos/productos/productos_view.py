@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 
-class Productos(ctk.CTkFrame):
+class ProductosView(ctk.CTkFrame):
     def __init__(self, master, controlador): # Recibe 'master' (el contenedor de la derecha)
         super().__init__(master) 
         self.controlador = controlador

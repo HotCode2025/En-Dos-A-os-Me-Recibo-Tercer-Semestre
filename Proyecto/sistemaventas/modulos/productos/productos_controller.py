@@ -1,4 +1,4 @@
-from modulos.productos.productos_view import Productos
+from modulos.productos.productos_view import ProductosView
 
 class ProductosController:
     def __init__(self, contenedor_derecho):
@@ -12,7 +12,7 @@ class ProductosController:
             widget.destroy()
 
         # 2. Crear la vista pasándole el contenedor como 'master'
-        self.productosVista = Productos(self.contenedor, self)
+        self.productosVista = ProductosView(self.contenedor, self)
         
         # 3. Mostrarla ocupando todo el espacio
         self.productosVista.pack(fill="both", expand=True)

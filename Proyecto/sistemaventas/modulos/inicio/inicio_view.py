@@ -9,7 +9,7 @@ class Inicio(ctk.CTk):
      def __init__(self, controlador):
         super().__init__()
         self.controlador = controlador
-        self.title("Sistema de Ventas v 1.0")
+        self.title("Sistema de Ventas v 1.0 - En dos años me recibo" )
         self.geometry("1100x600")
         
         # Configurar el layout de la cuadrícula (1 fila, 2 columnas)
