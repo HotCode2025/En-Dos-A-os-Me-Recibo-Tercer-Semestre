@@ -30,7 +30,7 @@ class Inicio(ctk.CTk):
         self.btn_productos = ctk.CTkButton(self.sidebar_frame, text="Productos", command=self.controlador.mostrarProductos)
         self.btn_productos.grid(row=2, column=0, padx=20, pady=10)
 
-        self.btn_clientes = ctk.CTkButton(self.sidebar_frame, text="Clientes")
+        self.btn_clientes = ctk.CTkButton(self.sidebar_frame, text="Clientes", command=self.controlador.mostrarClientes)
         self.btn_clientes.grid(row=3, column=0, padx=20, pady=10)
 
         self.btn_ventas = ctk.CTkButton(self.sidebar_frame, text="Nueva Venta")
