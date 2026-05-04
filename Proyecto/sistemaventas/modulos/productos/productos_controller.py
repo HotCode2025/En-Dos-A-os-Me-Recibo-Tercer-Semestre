@@ -1,5 +1,5 @@
 from modulos.productos.productos_view import ProductosView
-
+from .agregar_productos_view import agregarProducto
 class ProductosController:
     def __init__(self, contenedor_derecho):
         # Guardamos la referencia de dónde se va a mostrar
@@ -16,3 +16,13 @@ class ProductosController:
         
         # 3. Mostrarla ocupando todo el espacio
         self.productosVista.pack(fill="both", expand=True)
+
+    # 
+    def abrir_formulario_registro(self):
+        # Creamos la ventana emergente y le pasamos el método que guardará los datos
+        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardar_nuevo_producto)
+
+    def guardar_nuevo_producto(self, datos):
+        print(f"Guardando en BD: {datos['descripcion']}")
+        # Aquí iría tu lógica de Base de Datos
+        # self.mostrarProductos() # Refrescamos la tabla

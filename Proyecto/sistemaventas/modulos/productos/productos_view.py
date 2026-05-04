@@ -17,7 +17,7 @@ class ProductosView(ctk.CTkFrame):
         self.entry_search = ctk.CTkEntry(search_frame, placeholder_text="Buscar producto...", width=300)
         self.entry_search.pack(side="left", padx=5)
         
-        btn_add = ctk.CTkButton(search_frame, text="+ Añadir", fg_color="green", hover_color="#006400")
+        btn_add = ctk.CTkButton(search_frame, text="+ Añadir", fg_color="green", hover_color="#006400", command=self.controlador.abrir_formulario_registro)
         btn_add.pack(side="right", padx=5)
 
         # --- TABLA DE PRODUCTOS ---
