@@ -3,6 +3,8 @@ import customtkinter as ctk
 # Configuración estética global
 ctk.set_appearance_mode("dark")  # Modos: "System" (standard), "Dark", "Light"
 ctk.set_default_color_theme("blue")  # Temas: "blue" (standard), "green", "dark-blue"
+ctk.set_widget_scaling(1.2)  # 1.5 es 50% más grande
+# ctk.set_window_scaling(1.5)  # Escala la ventana también
 
 
 class Inicio(ctk.CTk):

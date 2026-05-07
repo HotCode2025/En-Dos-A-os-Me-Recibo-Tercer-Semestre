@@ -16,8 +16,7 @@ def crearTablasDB():
         -- 2. Categorías de Productos
         CREATE TABLE IF NOT EXISTS categorias (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            descripcion TEXT,
+            descripcion TEXT NOT NULL,
             observacion TEXT
         );
 

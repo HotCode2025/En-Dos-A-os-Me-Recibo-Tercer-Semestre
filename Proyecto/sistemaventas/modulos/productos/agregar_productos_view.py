@@ -1,11 +1,12 @@
 import customtkinter as ctk
 
 class agregarProducto(ctk.CTkToplevel):
-    def __init__(self, parent, callback_guardar):
+    def __init__(self, parent, callback_guardar, categorias):
         super().__init__(parent)
         self.title("Añadir Producto")
         self.callback_guardar = callback_guardar # Función para devolver los datos
-
+        self.categorias = categorias
+        print("categorias", self.categorias)
         # Datos de prueba. 
          # Lista de categorías simulando lo que vendría de tu Base de Datos
         categorias = [
@@ -67,14 +68,14 @@ class agregarProducto(ctk.CTkToplevel):
         
         # Categorías. 
         # Guardamos las categorías y creamos una lista solo con los nombres para el combo
-        self.mapaCategorias = {cat['nombre']: cat['id'] for cat in categorias}
-        nombresCategorias = list(self.mapaCategorias.keys())
+        self.mapaCategorias = {cat['descripcion']: cat['id'] for cat in self.categorias}
+        descripcionCategorias = list(self.mapaCategorias.keys())
 
         # UI - Categoría
         self.label_cat = ctk.CTkLabel(self.main_container, text="Categoría:", anchor="w")
         self.label_cat.grid(row=4, column=0, padx=20, pady=(20, 0), sticky="ew")
 
-        self.selector_cat = ctk.CTkOptionMenu(self.main_container, values=nombresCategorias)
+        self.selector_cat = ctk.CTkOptionMenu(self.main_container, values=descripcionCategorias)
         self.selector_cat.grid(row=5, column=0, padx=20, pady=5, sticky="ew")
         
         # Precio
@@ -115,6 +116,13 @@ class agregarProducto(ctk.CTkToplevel):
             self.entryDescripcion.configure(border_color="red")
             return 
     
-        datos = {"descripcion": self.entryDescripcion.get()}
-        self.callback_guardar(datos) # Enviamos datos al controlador
+        producto = {
+            "descripcion": self.entryDescripcion.get(),
+            "uuid": self.entryCodigo.get(),
+            "id_categoria": self.mapaCategorias.get(self.selector_cat.get()),
+            "precio": float(self.entry_precio.get() or 0),
+            "stock": int(self.entryStock.get() or 0),
+            "observacion": self.txtObservacion.get("1.0", "end-1c")
+            }
+        self.callback_guardar(producto) # Enviamos datos al controlador
         self.destroy() # Cerramos la ventana
