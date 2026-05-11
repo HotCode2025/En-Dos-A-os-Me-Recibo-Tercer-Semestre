@@ -23,6 +23,22 @@ class ProductosModels:
             print(f"Error al leer categorías: {e}")
             return [] # Devolvemos lista vacía en caso de error 
     
+    def getProductos(self):
+        try:
+            # Abrimos, with. Abre y cierra la conexión a la DB 
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("SELECT productos.id AS id, categorias.descripcion AS categoria, productos.uuid AS codigo, productos.descripcion AS descipcion, productos.precio AS precio, productos.stock AS stock FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id")
+                
+                # Traemos los datos y los transformamos
+                productos = [{"id": p[0], "categoria": p[1], "codigo": p[2], "descripcion": p[3], "precio": p[4], "stock": p[5],} for p in cursor.fetchall()]
+                
+            # Al salir del 'with', la conexión se cierra sola
+            return productos
+        except Exception as e:
+            print(f"Error al leer categorías: {e}")
+            return [] # Devolvemos lista vacía en caso de error 
+    
     def inserterProducto(self, producto):
         try:
             # 1. Obtener conexión y crear cursor

@@ -8,30 +8,45 @@ class ProductosController:
         self.contenedor = contenedor_derecho
         self.productosVista = None
         self.productosModels = ProductosModels()
+        
 
     def mostrarProductos(self):
         # 1. Limpiar el contenedor cada vez que se carga una vista nueva
         for widget in self.contenedor.winfo_children():
             widget.destroy()
 
+        # traemos los productos del modelo
+        productos = self.obtener_lista_productos()
+ 
         # 2. Crear la vista pasándole el contenedor como 'master'
-        self.productosVista = ProductosView(self.contenedor, self)
-        
+        self.productosVista = ProductosView(self.contenedor, self, productos)
         # 3. Mostrarla ocupando todo el espacio
         self.productosVista.pack(fill="both", expand=True)
 
-    # 
-    def abrir_formulario_registro(self):
+    
+    def abrirFormularioRegistro(self):
         listaCategoria = self.productosModels.getCategorias() 
         
         # Creamos la ventana emergente y le pasamos el método que guardará los datos
-        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardar_nuevo_producto, listaCategoria)
+        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarNuevoProducto, listaCategoria)
 
-    # 
-    def guardar_nuevo_producto(self, producto):
+    def editar_producto(self, producto):
+        print(producto)
+        print("producto a editar")
+        
+    def eliminar_producto(self, producto):
+        print(producto)
+        print("eliminar producto")
+        
+    # Métodos rest. 
+    def guardarNuevoProducto(self, producto):
         print(f"Guardando en BD: {producto['descripcion']} - {producto['uuid']}") 
         # Guardamos los datos en la DB, para ello debemos llamar el método del models. 
         self.productosModels.inserterProducto(producto)
-        # self.mostrarProductos() # Refrescamos la tabla
-        
-    # 
+        # aquí se debería llamar al método para refrestar la tabla
+    
+    def obtener_lista_productos(self):
+        """Método centralizado para obtener datos"""
+        # Aquí en un futuro se puede añadir lógica extra (filtros, logs, validaciones)
+        return self.productosModels.getProductos()
+    
