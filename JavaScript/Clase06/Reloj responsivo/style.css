@@ -1,0 +1,30 @@
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#02505a;
+}
+
+.reloj{
+    background:#111;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+}
+
+#hora{
+    font-size:80px;
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px #7c7c7c,
+        0 0 20px #7c7c7c,
+        0 0 40px #7c7c7c;
+}
+
+#fecha{
+    color:rgb(117, 117, 117);
+    margin-top:15px;
+    font-size:30px;
+}
