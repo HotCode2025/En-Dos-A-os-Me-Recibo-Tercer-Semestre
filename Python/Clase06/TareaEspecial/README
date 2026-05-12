@@ -1,0 +1,9 @@
+¿Cómo se desactiva el enorno virtual desde la terminal?
+desactivate
+
+¿Qué es el DOM?
+El DOM (Document Object Model) es una interfaz de programación que representa el documento HTML como una estructura lógica de árbol. Cuando el navegador carga una página, lee el código fuente y crea este "mapa" donde cada etiqueta, atributo y fragmento de texto se convierte en un objeto con el que podemos interactuar.
+
+Su función principal es servir de puente entre el archivo estático y los lenguajes de programación como JavaScript. Gracias al DOM, el código no es algo rígido, podemos usar scripts para buscar elementos específicos, eliminarlos, cambiar sus estilos CSS o crear contenido nuevo de forma dinámica sin necesidad de recargar la pestaña.
+
+En la práctica, cuando programamos una funcionalidad donde un menú se despliega al hacer clic o un formulario muestra un error en tiempo real, lo que estamos haciendo es manipular este árbol de objetos. Es la pieza fundamental que permite que la web sea interactiva y se comporte más como una aplicación que como un simple documento de lectura.
