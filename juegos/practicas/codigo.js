@@ -1,41 +1,49 @@
 
 // 1 = Piedra, 2 = Papel, 3 = Tijera
 
-// Variables principales
-let jugador = 0;
-let pc = 0;
-let triunfos = 0;
-let perdidas = 0;
+// Bucle para permitir reiniciar el juego
+let jugarDeNuevo = true;
 
-// El juego se repite hasta que alguien llegue a 
-while (triunfos < 3 && perdidas < 3) {
+while (jugarDeNuevo) {
+    // Variables principales
+    let jugador = 0;
+    let pc = 0;
+    let triunfos = 0;
+    let perdidas = 0;
 
-    pc = numAleatorio(1, 3);
-    jugador = parseInt(prompt("Elige : 1 piedra, 2 papel, 3 tijera"));
+    // El juego se repite hasta que alguien llegue a 
+    while (triunfos < 3 && perdidas < 3) {
 
-    alert("PC elige: " + eleccion(pc));
-    alert("Tú eliges: " + eleccion(jugador));
+        pc = numAleatorio(1, 3);
+        jugador = parseInt(prompt("Elige : 1 piedra, 2 papel, 3 tijera"));
 
-    // Lógica del juego (combate)
-    if (pc == jugador) {
-        alert("Empate");
-    } else if (jugador == 1 && pc == 3) {
-        alert("Ganaste");
-        triunfos++;
-    } else if (jugador == 2 && pc == 1) {
-        alert("Ganaste");
-        triunfos++;
-    } else if (jugador == 3 && pc == 2) {
-        alert("Ganaste");
-        triunfos++;
-    } else {
-        alert("Perdiste");
-        perdidas++;
+        alert("PC elige: " + eleccion(pc));
+        alert("Tú eliges: " + eleccion(jugador));
+
+        // Lógica del juego (combate)
+        if (pc == jugador) {
+            alert("Empate");
+        } else if (jugador == 1 && pc == 3) {
+            alert("Ganaste");
+            triunfos++;
+        } else if (jugador == 2 && pc == 1) {
+            alert("Ganaste");
+            triunfos++;
+        } else if (jugador == 3 && pc == 2) {
+            alert("Ganaste");
+            triunfos++;
+        } else {
+            alert("Perdiste");
+            perdidas++;
+        }
     }
-}
 
-// Resultado final
-alert("GANASTE " + triunfos + " veces. Perdiste: " + perdidas + " veces.");
+    // Resultado final
+    alert("GANASTE " + triunfos + " veces. Perdiste: " + perdidas + " veces.");
+
+    // Preguntar si desea jugar de nuevo
+    jugarDeNuevo = confirm("¿Deseas jugar de nuevo?");
+}
 
 //Función que genera número aleatorio entre min y max (incluidos)
 // Math.random genera número entre 0 y 0.999...
