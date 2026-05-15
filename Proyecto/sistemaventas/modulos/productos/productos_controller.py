@@ -50,3 +50,16 @@ class ProductosController:
         # Aquí en un futuro se puede añadir lógica extra (filtros, logs, validaciones)
         return self.productosModels.getProductos()
     
+    def buscarProductos(self, texto):
+        texto = texto.strip()  # saca espacios al principio y al final
+        
+        if texto == "":
+            # Si el campo está vacío, mostrar todos
+            productos = self.obtener_lista_productos()
+        else:
+            productos = self.productosModels.buscarProductos(texto)
+        
+        # Refrescar la tabla con los resultados
+        if self.productosVista:
+            self.productosVista.refresh(productos)
+    

@@ -17,7 +17,14 @@ class ProductosView(ctk.CTkFrame):
         
         self.entry_search = ctk.CTkEntry(search_frame, placeholder_text="Buscar producto...", width=300)
         self.entry_search.pack(side="left", padx=5)
+        self.entry_search.bind("<Return>", lambda event: self._buscar())
         
+        # El botón de búsqueda ahora llama a un método interno que a su vez llama al controlador
+        btn_buscar = ctk.CTkButton(search_frame, text="🔍 Buscar", width=100,
+                            command=self._buscar)
+        btn_buscar.pack(side="left", padx=5)
+        
+        # El botón de añadir abre el formulario para agregar un nuevo producto
         btn_add = ctk.CTkButton(search_frame, text="+ Añadir", fg_color="green", 
                                  hover_color="#006400", command=self.controlador.abrirFormularioRegistro)
         btn_add.pack(side="right", padx=5)
@@ -88,6 +95,11 @@ class ProductosView(ctk.CTkFrame):
         )
         btn_delete.pack(side="left", padx=2)
 
+    # Método interno para manejar la búsqueda, que a su vez llama al controlador
+    def _buscar(self):
+        texto = self.entry_search.get()
+        self.controlador.buscarProductos(texto)
+        
     def refresh(self, nuevos_productos):
         """Método público para que el controlador actualice la vista"""
         self.renderizar_tabla(nuevos_productos)

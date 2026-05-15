@@ -71,3 +71,26 @@ class ProductosModels:
             print(f"Error al insertar producto: {e}")
             return False
 
+    def buscarProductos(self, texto):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                # El % es el "comodín" en SQL: busca el texto en cualquier parte
+                busqueda = f"%{texto}%"
+                cursor.execute("""
+                    SELECT productos.id, categorias.descripcion, productos.uuid,
+                        productos.descripcion, productos.precio, productos.stock
+                    FROM productos
+                    INNER JOIN categorias ON productos.id_categoria = categorias.id
+                    WHERE productos.descripcion LIKE ?
+                    OR categorias.descripcion LIKE ?
+                    OR productos.uuid LIKE ?
+                """, (busqueda, busqueda, busqueda))
+                
+                productos = [{"id": p[0], "categoria": p[1], "codigo": p[2],
+                            "descripcion": p[3], "precio": p[4], "stock": p[5]}
+                            for p in cursor.fetchall()]
+            return productos
+        except Exception as e:
+            print(f"Error al buscar productos: {e}")
+            return []
