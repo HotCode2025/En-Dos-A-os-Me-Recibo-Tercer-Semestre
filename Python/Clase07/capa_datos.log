@@ -1,0 +1,91 @@
+09:56:58 PM:DEBUG [logger_base.py:13] Mensaje a nivel DEBUG
+09:56:58 PM:INFO [logger_base.py:14] Mensaje a nivel INFO
+09:56:58 PM:WARNING [logger_base.py:15] Mensaje a nivel WARNING
+09:56:58 PM:ERROR [logger_base.py:16] Mensaje a nivel ERROR
+09:56:58 PM:CRITICAL [logger_base.py:17] Mensaje a nivel CRITICAL
+10:43:58 PM:DEBUG [Persona.py:49] Persona [id_persona=1, nombre=Ramiro, apellido=Muñoz, email=ramiromunoz2712@gmail.com]
+10:44:34 PM:DEBUG [Persona.py:54] 
+        Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:45:40 PM:DEBUG [Persona.py:54] 
+        Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:45:40 PM:DEBUG [Persona.py:56] 
+        Persona: Jose
+        Nombre: Perez
+        Apellido: joseperezgmail.com
+        Email: None
+        
+10:46:22 PM:DEBUG [Persona.py:54] 
+        Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:47:19 PM:DEBUG [Persona.py:55] 
+        Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:47:19 PM:DEBUG [Persona.py:57] 
+        Persona: Jose
+        Nombre: Perez
+        Apellido: joseperezgmail.com
+        Email: None
+        
+10:48:09 PM:DEBUG [Persona.py:55] 
+        Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:48:09 PM:DEBUG [Persona.py:57] 
+        Persona: None
+        Nombre: Jose
+        Apellido: Perez
+        Email: joseperezgmail.com
+        
+10:48:37 PM:DEBUG [Persona.py:55] 
+        Id Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:48:37 PM:DEBUG [Persona.py:57] 
+        Id Persona: None
+        Nombre: Jose
+        Apellido: Perez
+        Email: joseperezgmail.com
+        
+10:49:44 PM:DEBUG [Persona.py:55] 
+        Id Persona: 1
+        Nombre: Ramiro
+        Apellido: Muñoz
+        Email: ramiromunoz2712@gmail.com
+        
+10:49:44 PM:DEBUG [Persona.py:57] 
+        Id Persona: None
+        Nombre: Jose
+        Apellido: Perez
+        Email: joseperezgmail.com
+        
+10:49:44 PM:DEBUG [Persona.py:59] 
+        Id Persona: 1
+        Nombre: None
+        Apellido: None
+        Email: None
+        
+11:15:01 PM:DEBUG [Conexion.py:20] Conexion exitosa: <connection object at 0x00000220B6B83450; dsn: 'user=postgres password=xxx host=127.0.0.1 port=5432', closed: 0>
+11:17:07 PM:ERROR [Conexion.py:23] Ocurrió un error: 'utf-8' codec can't decode byte 0xf3 in position 79: invalid continuation byte
+11:17:14 PM:DEBUG [Conexion.py:20] Conexion exitosa: <connection object at 0x000001E6330F3450; dsn: 'user=postgres password=xxx host=127.0.0.1 port=5432', closed: 0>
+11:17:30 PM:DEBUG [Conexion.py:20] Conexion exitosa: <connection object at 0x000001AE9FCE3450; dsn: 'user=postgres password=xxx host=127.0.0.1 port=5432', closed: 0>
+11:17:30 PM:ERROR [Conexion.py:36] Ocurrió un error: 'NoneType' object has no attribute 'cursor'
+11:18:53 PM:DEBUG [Conexion.py:20] Conexion exitosa: <connection object at 0x0000027BA89D3450; dsn: 'user=postgres password=xxx host=127.0.0.1 port=5432', closed: 0>
+11:18:53 PM:DEBUG [Conexion.py:33] Se abrio correctamente el cursor: <cursor object at 0x0000027BA8D87060; closed: 0>
