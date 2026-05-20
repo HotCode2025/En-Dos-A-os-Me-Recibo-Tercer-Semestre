@@ -23,7 +23,7 @@ class Inicio(ctk.CTk):
         self.sidebar_frame = ctk.CTkFrame(self, width=200, corner_radius=0)
         # Corregido: 'column=0' con signo igual, no dos puntos
         self.sidebar_frame.grid(row=0, column=0, sticky="nsew") 
-        self.sidebar_frame.grid_rowconfigure(5, weight=1) # Espaciador para empujar botones abajo si quieres
+        self.sidebar_frame.grid_rowconfigure(6, weight=1) # Espaciador para empujar botones abajo si quieres
         
 
         # Botones de navegación
@@ -36,8 +36,11 @@ class Inicio(ctk.CTk):
         self.btn_clientes = ctk.CTkButton(self.sidebar_frame, text="Clientes", command=self.controlador.mostrarClientes)
         self.btn_clientes.grid(row=3, column=0, padx=20, pady=10)
 
+        self.btn_configuracion = ctk.CTkButton(self.sidebar_frame, text="Configuración", command=self.controlador.mostrarConfiguracion)
+        self.btn_configuracion.grid(row=4, column=0, padx=20, pady=10)
+
         self.btn_ventas = ctk.CTkButton(self.sidebar_frame, text="Nueva Venta", command=self.controlador.mostrarFacturacion)
-        self.btn_ventas.grid(row=4, column=0, padx=20, pady=10)
+        self.btn_ventas.grid(row=5, column=0, padx=20, pady=10)
 
         # --- ÁREA DE CONTENIDO PRINCIPAL ---
         self.main_view = ctk.CTkFrame(self, corner_radius=10, fg_color="transparent")

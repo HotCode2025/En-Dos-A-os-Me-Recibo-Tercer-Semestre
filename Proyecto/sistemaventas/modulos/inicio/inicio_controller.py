@@ -3,6 +3,8 @@ from modulos.productos.productos_controller import ProductosController
 from modulos.clientes.clientes_controller import ClientesController
 from modulos.facturacion.facturacion_controller import FacturacionController
 from modulos.dashboard.dashboard_controller import DashboardController
+from modulos.configuracion.configuracion_controller import ConfiguracionController
+
 class InicioControlador:
     def __init__(self):
         self.vistaInicio = Inicio(self)
@@ -13,6 +15,7 @@ class InicioControlador:
         self.clientesController = ClientesController(self.vistaInicio.main_view)
         self.facturacionController = FacturacionController(self.vistaInicio.main_view)
         self.dashboardController = DashboardController(self.vistaInicio.main_view)
+        self.configuracionController = ConfiguracionController(self.vistaInicio.main_view)
         # cargamos el Dashboard al iniciar la App. 
         self.mostrarDashboard()
     
@@ -31,6 +34,13 @@ class InicioControlador:
         
         self.clientesController.mostrarClientes()
         self.vista_actual = "clientes"
+        
+    def mostrarConfiguracion(self):
+        if self.vista_actual == "configuracion":
+            return
+        
+        self.configuracionController.mostrarConfiguracion()
+        self.vista_actual = "configuracion"
         
     def mostrarFacturacion(self): 
         if self.vista_actual == "facturacion": 
