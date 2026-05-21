@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA LEYENDA DE AANG: AVATAR</title>
+    
+</head>
+<body>
+    <H1>AVATAR 🔥💧🌱🌪️</H1>   <!--Esto es estatico, No cambia, el h1 se utiliza UNA VEZ  -->
+   <section id= "seleccionar-personaje"> 
+        <h2>Elige tu Personaje</h2>
+
+        <label for="zuko">Zuko</label> 
+        <input type="radio" name="personaje" id="zuko"/>
+
+        <label for="katara">Katara</label> 
+        <input type="radio" name="personaje" id="katara"/>
+
+        <label for="aang">Aang</label> 
+        <input type="radio" name="personaje" id="aang"/>
+
+        <label for="toph">Toph</label> 
+        <input type="radio" name="personaje" id="toph"/>
+
+
+        <button id="boton-personaje">Seleccionar</button> <!-- Este boton es para seleccionar los personajes -->
+
+   </section>
+
+   <section id="seleccionar-ataque">
+        <h2>Elige tu ataque</h2> <!--  Se puede usar varias veces-->
+        <p>Tu personaje tiene <span>3</span> vidas</p>
+        <p>Los personajes del enemigo tienen <span>3</span> vidas</p>
+        <p>
+            <button id="boton-fuego">Fuego 🔥</button>
+            <button id="boton-agua">Agua 💧</button>
+            <button id="boton-tierra">Tierra 🌱</button>
+            <button id="boton-aire">Aire 🌪️</button>
+        </p>
+   </section>
+
+   <section id="mensajes"> <!-- Parrafo dinamico -->
+    <p>Tu personaje atacó con todo el poder del Fuego, el personaje del enemigo atacó con el medio poder de la TIERRA - GANASTE 🎉 </p>
+   </section>
+
+   <section id="reiniciar">
+        <button id="boton-reiniciar">Reiniciar</button>
+   </section>
+   <script src="/public/js/avatar.js"></script>
+</body>
+</html>
