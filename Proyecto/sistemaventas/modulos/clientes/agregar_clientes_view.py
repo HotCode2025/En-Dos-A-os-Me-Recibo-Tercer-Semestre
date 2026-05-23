@@ -2,13 +2,14 @@ import customtkinter as ctk
 
 
 class AgregarCliente(ctk.CTkToplevel):
-    def __init__(self, parent, callback_guardar):
+    def __init__(self, parent, callback_guardar, cliente=None):
         super().__init__(parent)
         self.title("Añadir Cliente")
         self.callback_guardar = callback_guardar
+        self.cliente = cliente
 
         ancho_ventana = 450
-        alto_ventana = 520
+        alto_ventana = 650
         ancho_pantalla = self.winfo_screenwidth()
         alto_pantalla = self.winfo_screenheight()
         x = (ancho_pantalla // 2) - (ancho_ventana // 2)
@@ -29,10 +30,20 @@ class AgregarCliente(ctk.CTkToplevel):
         self.entry_telefono = self._crear_campo("Teléfono:", 4)
         self.entry_direccion = self._crear_campo("Dirección:", 5)
 
+
+
+
         # Observaciones: colocado después del último campo para evitar solapamientos
         ctk.CTkLabel(self.main_container, text="Observaciones:", anchor="w").grid(row=11, column=0, padx=12, pady=(10, 0), sticky="w")
         self.txt_observacion = ctk.CTkTextbox(self.main_container, height=100, corner_radius=10, border_width=2)
         self.txt_observacion.grid(row=12, column=0, padx=12, pady=5, sticky="ew")
+        if self.cliente:
+            self.entry_nombre.insert(0, self.cliente["razon_social"])
+            self.entry_documento.insert(0, self.cliente["documento"])
+            self.entry_email.insert(0, self.cliente["email"])
+            self.entry_telefono.insert(0, self.cliente["telefono"])
+            self.entry_direccion.insert(0, self.cliente["direccion"])
+            self.txt_observacion.insert("1.0", self.cliente["observacion"])
 
         self.btn_guardar = ctk.CTkButton(self.main_container, text="Guardar Cliente", command=self.enviar_datos)
         self.btn_guardar.grid(row=13, column=0, pady=18, padx=12, sticky="ew")

@@ -1,6 +1,7 @@
 from modulos.clientes.clientes_view import ClientesView
 from modulos.clientes.clientes_models import ClientesModels
 from modulos.clientes.agregar_clientes_view import AgregarCliente
+from tkinter import messagebox
 
 class ClientesController: 
     def __init__(self, contenedor_derecho):
@@ -30,10 +31,29 @@ class ClientesController:
             self.mostrarClientes()
 
     def editar_cliente(self, cliente_id):
-        print(f"Editar cliente {cliente_id} aún no implementado")
+        clientes = self.clientesModel.getClientes()
+
+        cliente = next((c for c in clientes if c["id"] == cliente_id), None)
+
+        if cliente:
+            self.ventana_formulario = AgregarCliente(
+                self.contenedor.winfo_toplevel(),
+                lambda datos: self._guardar_edicion(cliente_id, datos),
+                cliente
+            )
+
+    def _guardar_edicion(self, cliente_id, datos):
+        if self.clientesModel.actualizarCliente(cliente_id, datos):
+            self.mostrarClientes()
+
 
     def eliminar_cliente(self, cliente_id):
-        print(f"Eliminar cliente {cliente_id} aún no implementado")
+        confirm = messagebox.askyesno("Confirmar", f"¿Eliminar cliente {cliente_id}?")
+
+        if confirm:
+            if self.clientesModel.eliminarCliente(cliente_id):
+                messagebox.showinfo("Éxito", "Cliente eliminado correctamente")
+                self.mostrarClientes()
 
     def buscarClientes(self, texto):
         texto = texto.strip()

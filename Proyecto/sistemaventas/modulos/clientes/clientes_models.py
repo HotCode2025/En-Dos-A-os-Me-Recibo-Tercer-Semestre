@@ -90,3 +90,40 @@ class ClientesModels:
         except Exception as e:
             print(f"Error al buscar clientes: {e}")
             return []
+
+    def eliminarCliente(self, cliente_id):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("DELETE FROM clientes WHERE id = ?", (cliente_id,))
+                conexion.commit()
+                return True
+        except Exception as e:
+            print(f"Error al eliminar cliente: {e}")
+            return False
+
+    def actualizarCliente(self, cliente_id, cliente):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute(
+                    """
+                    UPDATE clientes
+                    SET nombre = ?, documento = ?, email = ?, telefono = ?, direccion = ?, observacion = ?
+                    WHERE id = ?
+                    """,
+                    (
+                        cliente["razon_social"],
+                        cliente["documento"],
+                        cliente["email"],
+                        cliente["telefono"],
+                        cliente["direccion"],
+                        cliente["observacion"],
+                        cliente_id
+                    ),
+                )
+                conexion.commit()
+                return True
+        except Exception as e:
+            print(f"Error al actualizar cliente: {e}")
+            return False
