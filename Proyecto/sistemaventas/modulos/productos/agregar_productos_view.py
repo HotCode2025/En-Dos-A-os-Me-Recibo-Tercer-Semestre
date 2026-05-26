@@ -1,23 +1,14 @@
 import customtkinter as ctk
 
 class agregarProducto(ctk.CTkToplevel):
-    def __init__(self, parent, callback_guardar, categorias):
+    def __init__(self, parent, callback_guardar, categorias, producto_edicion=None):
         super().__init__(parent)
-        self.title("Añadir Producto")
+        self.producto_edicion = producto_edicion
+        self.title("Añadir Producto" if not producto_edicion else "Editar Producto")
         self.callback_guardar = callback_guardar # Función para devolver los datos
         self.categorias = categorias
         print("categorias", self.categorias)
-        # Datos de prueba. 
-         # Lista de categorías simulando lo que vendría de tu Base de Datos
-        categorias = [
-            {"id": 1, "nombre": "Electrónica"},
-            {"id": 2, "nombre": "Computación"},
-            {"id": 3, "nombre": "Periféricos"},
-            {"id": 4, "nombre": "Accesorios"},
-            {"id": 5, "nombre": "Software"},
-            {"id": 6, "nombre": "Cámaras"},
-            {"id": 7, "nombre": "Audio"}
-        ]
+      
 
         # centrar la venta del formulario. 
          # 1. Definir tamaño de la ventana
@@ -68,7 +59,16 @@ class agregarProducto(ctk.CTkToplevel):
         
         # Categorías. 
         # Guardamos las categorías y creamos una lista solo con los nombres para el combo
-        self.mapaCategorias = {cat['descripcion']: cat['id'] for cat in self.categorias}
+        self.mapaCategorias = {}
+
+        for cat in self.categorias:
+            # Caso 1: diccionario
+            if isinstance(cat, dict):
+                self.mapaCategorias[cat["descripcion"]] = cat["id"]
+
+            # Caso 2: tupla o lista (id, descripcion)
+            elif isinstance(cat, (tuple, list)) and len(cat) >= 2:
+                self.mapaCategorias[cat[1]] = cat[0]
         descripcionCategorias = list(self.mapaCategorias.keys())
 
         # UI - Categoría
@@ -108,6 +108,19 @@ class agregarProducto(ctk.CTkToplevel):
         self.labelError = ctk.CTkLabel(self.main_container, text="", text_color="red")
         self.labelError.grid(row=13, column=0, pady=5) 
         
+        if self.producto_edicion:
+            self.entryDescripcion.insert(0, self.producto_edicion.get("descripcion", ""))
+            self.entryCodigo.insert(0, self.producto_edicion.get("codigo", ""))
+            self.entry_precio.insert(0, str(self.producto_edicion.get("precio", "")))
+            self.entryStock.insert(0, str(self.producto_edicion.get("stock", "")))
+            self.txtObservacion.insert("1.0", self.producto_edicion.get("observacion", "") or "")
+            
+            id_cat = self.producto_edicion.get("id_categoria")
+            for cat in self.categorias:
+                if cat["id"] == id_cat:
+                    self.selector_cat.set(cat["descripcion"])
+                    break
+                
     def enviar_datos(self):
         
         # validamos los datos antes de enviar. 
@@ -124,5 +137,7 @@ class agregarProducto(ctk.CTkToplevel):
             "stock": int(self.entryStock.get() or 0),
             "observacion": self.txtObservacion.get("1.0", "end-1c")
             }
+        if self.producto_edicion:
+            producto["id"] = self.producto_edicion["id"]
         self.callback_guardar(producto) # Enviamos datos al controlador
         self.destroy() # Cerramos la ventana

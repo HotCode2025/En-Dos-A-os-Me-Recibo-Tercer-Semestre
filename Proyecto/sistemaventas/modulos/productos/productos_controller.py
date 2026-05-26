@@ -11,6 +11,8 @@ class ProductosController:
         self.productosVista = None
         self.productosModels = ProductosModels()
         
+        # array para los productos. 
+        self.productos = []
     # Métodos para gestionar las Categorías
     
     def abrir_categorias(self):
@@ -45,10 +47,10 @@ class ProductosController:
             widget.destroy()
 
         # traemos los productos del modelo
-        productos = self.obtener_lista_productos()
+        self.productos = self.obtener_lista_productos()
  
         # 2. Crear la vista pasándole el contenedor como 'master'
-        self.productosVista = ProductosView(self.contenedor, self, productos)
+        self.productosVista = ProductosView(self.contenedor, self, self.productos)
         # 3. Mostrarla ocupando todo el espacio
         self.productosVista.pack(fill="both", expand=True)
 
@@ -59,9 +61,16 @@ class ProductosController:
         # Creamos la ventana emergente y le pasamos el método que guardará los datos
         self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarNuevoProducto, listaCategoria)
 
-    def editar_producto(self, producto):
-        print(producto)
-        print("producto a editar")
+    def editar_producto(self, producto_id):
+        producto_a_editar = next((p for p in self.productos if p["id"] == producto_id), None)
+        if not producto_a_editar:
+            return
+        listaCategoria = [
+            {"id": c[0], "descripcion": c[1]} if isinstance(c, (tuple, list)) else c
+            for c in self.productosModels.getCategorias()
+        ]
+        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarEdicionProducto,listaCategoria, producto_a_editar)
+    
         
     def eliminar_producto(self, producto):
         print(producto)
@@ -80,6 +89,15 @@ class ProductosController:
         """Método centralizado para obtener datos"""
         # Aquí en un futuro se puede añadir lógica extra (filtros, logs, validaciones)
         return self.productosModels.getProductos()
+    
+    def guardarEdicionProducto(self, producto):
+        exito = self.productosModels.actualizarProducto(producto)
+        if exito:
+            messagebox.showinfo("Éxito", "Producto actualizado con éxito.")
+            todos_los_productos = self.productosModels.getProductos()
+            self.productosVista.refresh(todos_los_productos)
+        else:
+            messagebox.showerror("Error", "No se pudo actualizar el producto.")
     
     def buscarProductos(self, texto):
         texto = texto.strip()  # saca espacios al principio y al final

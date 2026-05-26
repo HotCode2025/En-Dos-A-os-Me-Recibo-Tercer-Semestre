@@ -108,6 +108,29 @@ class ProductosModels:
             print(f"Error al insertar producto: {e}")
             return False
 
+    def actualizarProducto(self, producto):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                sql = """UPDATE productos 
+                         SET descripcion=?, uuid=?, id_categoria=?, precio=?, stock=?, observacion=? 
+                         WHERE id=?"""
+                valores = (
+                    producto["descripcion"],
+                    producto["uuid"],
+                    producto["id_categoria"],
+                    producto["precio"],
+                    producto["stock"],
+                    producto["observacion"],
+                    producto["id"]
+                )
+                cursor.execute(sql, valores)
+                conexion.commit()
+                return True
+        except Exception as e:
+            print(f"Error al actualizar producto: {e}")
+            return False
+
     def buscarProductos(self, texto):
         try:
             with db.get_connection() as conexion:
