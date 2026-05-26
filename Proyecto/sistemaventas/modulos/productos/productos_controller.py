@@ -1,6 +1,8 @@
+import tkinter.messagebox as messagebox
 from modulos.productos.productos_view import ProductosView
 from .agregar_productos_view import agregarProducto
 from .productos_models import ProductosModels
+from .categoria_view import CategoriasView
 
 class ProductosController:
     def __init__(self, contenedor_derecho):
@@ -9,7 +11,34 @@ class ProductosController:
         self.productosVista = None
         self.productosModels = ProductosModels()
         
+    # Métodos para gestionar las Categorías
+    
+    def abrir_categorias(self):
+        categorias = self.productosModels.getCategorias()
+        CategoriasView(self.contenedor.winfo_toplevel(), self, categorias)
+        
+    def guardar_categoria(self, datos, vista_categoria):
+        if datos.get("id"):
+            exito, mensaje = self.productosModels.actualizarCategoria(datos["id"], datos["descripcion"], datos["observacion"])
+        else:
+            exito, mensaje = self.productosModels.insertarCategoria(datos["descripcion"], datos["observacion"])
+            
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            # Refrescar vista
+            vista_categoria.refresh(self.productosModels.getCategorias())
+        else:
+            messagebox.showerror("Error", mensaje)
 
+    def eliminar_categoria(self, id_categoria, vista_categoria):
+        exito, mensaje = self.productosModels.eliminarCategoria(id_categoria)
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            vista_categoria.refresh(self.productosModels.getCategorias())
+        else:
+            messagebox.showerror("Error", mensaje)
+        
+    # métodos para gestionar los productos. 
     def mostrarProductos(self):
         # 1. Limpiar el contenedor cada vez que se carga una vista nueva
         for widget in self.contenedor.winfo_children():
@@ -37,6 +66,8 @@ class ProductosController:
     def eliminar_producto(self, producto):
         print(producto)
         print("eliminar producto")
+        
+    
         
     # Métodos rest. 
     def guardarNuevoProducto(self, producto):

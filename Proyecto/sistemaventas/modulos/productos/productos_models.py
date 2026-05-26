@@ -7,22 +7,59 @@ class ProductosModels:
         
         self.conexion = db.get_connection()
 
+    # métodos CRUD de las categorías
     def getCategorias(self):
         try:
             # Abrimos, with. Abre y cierra la conexión a la DB 
             with db.get_connection() as conexion:
                 cursor = conexion.cursor()
-                cursor.execute("SELECT id, descripcion FROM categorias")
+                cursor.execute("SELECT id, descripcion, observacion FROM categorias")
                 
                 # Traemos los datos y los transformamos
-                categorias = [{"id": f[0], "descripcion": f[1]} for f in cursor.fetchall()]
+                categorias = [{"id": f[0], "descripcion": f[1], "observacion": f[2]} for f in cursor.fetchall()]
                 
             # Al salir del 'with', la conexión se cierra sola
             return categorias
         except Exception as e:
             print(f"Error al leer categorías: {e}")
             return [] # Devolvemos lista vacía en caso de error 
+        
+    def insertarCategoria(self, descripcion, observacion):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("INSERT INTO categorias (descripcion, observacion) VALUES (?, ?)", (descripcion, observacion))
+                conexion.commit()
+                return True, "Categoría añadida correctamente."
+        except Exception as e:
+            return False, f"Error: {e}"
+
+    def actualizarCategoria(self, id_categoria, descripcion, observacion):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("UPDATE categorias SET descripcion=?, observacion=? WHERE id=?", (descripcion, observacion, id_categoria))
+                conexion.commit()
+                return True, "Categoría actualizada."
+        except Exception as e:
+            return False, f"Error: {e}"
+
+    def eliminarCategoria(self, id_categoria):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                # Verificar si está en uso por algún producto
+                cursor.execute("SELECT COUNT(*) FROM productos WHERE id_categoria=?", (id_categoria,))
+                if cursor.fetchone()[0] > 0:
+                    return False, "La categoría está asignada a productos y no puede eliminarse."
+                
+                cursor.execute("DELETE FROM categorias WHERE id=?", (id_categoria,))
+                conexion.commit()
+                return True, "Categoría eliminada."
+        except Exception as e:
+            return False, f"Error: {e}"
     
+    # métodos CRUD de los productos. 
     def getProductos(self):
         try:
             # Abrimos, with. Abre y cierra la conexión a la DB 

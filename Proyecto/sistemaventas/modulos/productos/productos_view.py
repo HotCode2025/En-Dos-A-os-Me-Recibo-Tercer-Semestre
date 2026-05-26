@@ -28,7 +28,16 @@ class ProductosView(ctk.CTkFrame):
         btn_add = ctk.CTkButton(search_frame, text="+ Añadir", fg_color="green", 
                                  hover_color="#006400", command=self.controlador.abrirFormularioRegistro)
         btn_add.pack(side="right", padx=5)
-
+        
+        # botón de acciones para añadir categorías. 
+        opciones_menu = ["Categorías"]
+        self.menu_acciones = ctk.CTkOptionMenu(
+            search_frame, 
+            values=opciones_menu,
+            command=self.ejecutar_accion
+        )
+        self.menu_acciones.set("Acciones")
+        self.menu_acciones.pack(side="right", padx=5)
         # Contenedor de Tabla
         self.table_container = ctk.CTkScrollableFrame(self, fg_color="#2b2b2b", corner_radius=10)
         self.table_container.pack(fill="both", expand=True, padx=20, pady=10)
@@ -43,6 +52,12 @@ class ProductosView(ctk.CTkFrame):
         # --- Carga Inicial de Datos, al iniciar la vista ---
         self.renderizar_tabla(productos)
 
+    # método para controlar las acciones: abrir categoría. 
+    
+    def ejecutar_accion(self, valor):
+        if valor == "Categorías":
+            self.controlador.abrir_categorias()
+        
     def renderizar_tabla(self, productos):
         """Limpia las filas actuales y dibuja las nuevas"""
         # 1. Limpiar filas existentes (preservando el encabezado en la fila 0)
