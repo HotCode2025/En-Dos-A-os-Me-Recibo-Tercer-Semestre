@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>El salto del caballo</h1>
+    <p>
+      <button id="run-knight">Siguiente movimiento</button>
+      <button id="reset-knight">Reiniciar</button>
+    </p>
+    <div id="knight-tour-output" style="white-space:pre;margin-top:1rem;"></div>
+    <script src="Ejercicio.js"></script>
+    <script>
+      const btn = document.getElementById('run-knight');
+      if (btn) btn.addEventListener('click', () => { if (typeof pasoSiguiente === 'function') pasoSiguiente(); });
+      const resetBtn = document.getElementById('reset-knight');
+      if (resetBtn) resetBtn.addEventListener('click', () => { if (typeof reiniciarRecorrido === 'function') reiniciarRecorrido(); });
+    </script>
+  </body>
+</html>

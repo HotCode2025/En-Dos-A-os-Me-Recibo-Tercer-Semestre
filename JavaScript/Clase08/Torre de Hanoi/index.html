@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Torres de Hanoi</h1>
+    <div class="controls">
+      <label>Nº discos: <input id="numDiscos" type="number" min="1" max="10" value="4"></label>
+      <button id="startBtn">Iniciar</button>
+      <button id="solveBtn">Resolver automático</button>
+      <button id="resetBtn">Reiniciar</button>
+      <span id="moves">Movimientos: 0</span>
+    </div>
+
+    <div id="game">
+      <div class="peg" data-peg="A"><div class="peg-label">A</div><div class="stack"></div></div>
+      <div class="peg" data-peg="B"><div class="peg-label">B</div><div class="stack"></div></div>
+      <div class="peg" data-peg="C"><div class="peg-label">C</div><div class="stack"></div></div>
+    </div>
+
+    <style>
+      body{font-family: Arial, Helvetica, sans-serif; padding:16px}
+      #game{display:flex; gap:20px; align-items:flex-end; height:320px; margin-top:18px}
+      .peg{flex:1; background:linear-gradient(#f6f6f6,#eaeaea); border:1px solid #ddd; position:relative; display:flex; flex-direction:column; justify-content:flex-end; align-items:center}
+      .peg-label{position:absolute; bottom:6px; font-weight:bold}
+      .stack{width:100%; display:flex; flex-direction:column-reverse; align-items:center; padding-bottom:44px}
+      .disk{height:26px; margin:4px 0; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600}
+      .peg.selected{outline:3px solid #7aa7ff}
+      .controls{display:flex; gap:12px; align-items:center}
+      input[type=number]{width:64px}
+    </style>
+
+    <script src="Ejercicio.js"></script>
+  </body>
+</html>
