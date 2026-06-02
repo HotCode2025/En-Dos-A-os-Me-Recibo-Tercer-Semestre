@@ -10,7 +10,7 @@ class ClientesView(ctk.CTkFrame):
         top_frame = ctk.CTkFrame(self, fg_color="transparent")
         top_frame.pack(fill="x", padx=20, pady=10)
 
-        self.entry_search = ctk.CTkEntry(top_frame, placeholder_text="Buscar cliente por razón social o documento...", width=350)
+        self.entry_search = ctk.CTkEntry(top_frame, placeholder_text="Buscar cliente por razón social o DNI/CIUT...", width=350)
         self.entry_search.pack(side="left", padx=5)
         self.entry_search.bind("<Return>", lambda event: self._buscar())
 
@@ -24,7 +24,7 @@ class ClientesView(ctk.CTkFrame):
         self.table_container.pack(fill="both", expand=True, padx=20, pady=10)
         self.table_container.grid_columnconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8), weight=1)
 
-        self.headers = ["ID", "Razón social", "Documento", "Email", "Teléfono", "Dirección", "Compras", "Obs.", "Acciones"]
+        self.headers = ["ID", "Razón social", "DNI/CIUT", "Email", "Teléfono", "Dirección", "Compras", "Obs.", "Acciones"]
         for i, header in enumerate(self.headers):
             lbl = ctk.CTkLabel(self.table_container, text=header, font=("Arial", 12, "bold"), text_color="gray")
             lbl.grid(row=0, column=i, padx=10, pady=5, sticky="nsew")

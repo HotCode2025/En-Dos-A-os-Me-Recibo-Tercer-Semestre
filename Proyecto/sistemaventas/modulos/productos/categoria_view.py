@@ -22,15 +22,11 @@ class CategoriasView(ctk.CTkToplevel):
         self.entry_desc = ctk.CTkEntry(self.form_frame, width=150)
         self.entry_desc.grid(row=0, column=1, padx=5, pady=5)
         
-        ctk.CTkLabel(self.form_frame, text="Observación:").grid(row=0, column=2, padx=5, pady=5)
-        self.entry_obs = ctk.CTkEntry(self.form_frame, width=150)
-        self.entry_obs.grid(row=0, column=3, padx=5, pady=5)
-        
         self.btn_guardar = ctk.CTkButton(self.form_frame, text="Agregar", width=80, command=self.guardar_categoria)
-        self.btn_guardar.grid(row=0, column=4, padx=10, pady=5)
-        
+        self.btn_guardar.grid(row=0, column=2, padx=10, pady=5)
+
         self.btn_cancelar = ctk.CTkButton(self.form_frame, text="Cancelar", width=80, fg_color="gray", command=self.limpiar_formulario)
-        self.btn_cancelar.grid(row=1, column=4, padx=10, pady=5)
+        self.btn_cancelar.grid(row=1, column=2, padx=10, pady=5)
         self.btn_cancelar.grid_remove() # Oculto por defecto
         
         # Lista de categorías
@@ -89,7 +85,7 @@ class CategoriasView(ctk.CTkToplevel):
         datos = {
             "id": self.categoria_edicion_id,
             "descripcion": desc,
-            "observacion": obs
+            "observacion": ""
         }
         
         self.controlador.guardar_categoria(datos, self)

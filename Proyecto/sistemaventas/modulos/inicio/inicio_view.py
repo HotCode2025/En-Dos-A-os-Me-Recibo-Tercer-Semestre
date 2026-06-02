@@ -27,7 +27,7 @@ class Inicio(ctk.CTk):
         
 
         # Botones de navegación
-        self.btn_inicio = ctk.CTkButton(self.sidebar_frame, text="Dashboard", command=self.controlador.mostrarDashboard)
+        self.btn_inicio = ctk.CTkButton(self.sidebar_frame, text="Inicio", command=self.controlador.mostrarDashboard)
         self.btn_inicio.grid(row=1, column=0, padx=20, pady=10)
 
         self.btn_productos = ctk.CTkButton(self.sidebar_frame, text="Productos", command=self.controlador.mostrarProductos)

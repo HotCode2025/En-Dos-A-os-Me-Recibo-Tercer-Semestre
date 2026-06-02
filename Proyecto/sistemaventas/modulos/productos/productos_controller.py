@@ -1,4 +1,5 @@
 import tkinter.messagebox as messagebox
+import uuid
 from modulos.productos.productos_view import ProductosView
 from .agregar_productos_view import agregarProducto
 from .productos_models import ProductosModels
@@ -56,8 +57,14 @@ class ProductosController:
 
     
     def abrirFormularioRegistro(self):
-        listaCategoria = self.productosModels.getCategorias() 
-        
+        listaCategoria = self.productosModels.getCategorias()
+
+        # Si no hay categorías, abrir la vista de categorías primero
+        if not listaCategoria:
+            messagebox.showinfo("Atención", "No existen categorías. Agregue una categoría antes de crear productos.")
+            self.abrir_categorias()
+            return
+
         # Creamos la ventana emergente y le pasamos el método que guardará los datos
         self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarNuevoProducto, listaCategoria)
 
@@ -80,10 +87,19 @@ class ProductosController:
         
     # Métodos rest. 
     def guardarNuevoProducto(self, producto):
-        print(f"Guardando en BD: {producto['descripcion']} - {producto['uuid']}") 
-        # Guardamos los datos en la DB, para ello debemos llamar el método del models. 
-        self.productosModels.inserterProducto(producto)
-        # aquí se debería llamar al método para refrestar la tabla
+        # Asegurar UUID (la tabla exige uuid NOT NULL UNIQUE)
+        if not producto.get('uuid'):
+            producto['uuid'] = str(uuid.uuid4())
+
+        exito = self.productosModels.inserterProducto(producto)
+        if exito:
+            messagebox.showinfo("Éxito", "Producto insertado correctamente.")
+            # Refrescar lista y vista
+            self.productos = self.obtener_lista_productos()
+            if self.productosVista:
+                self.productosVista.refresh(self.productos)
+        else:
+            messagebox.showerror("Error", "No se pudo insertar el producto. Revisa la consola para más detalles.")
     
     def obtener_lista_productos(self):
         """Método centralizado para obtener datos"""

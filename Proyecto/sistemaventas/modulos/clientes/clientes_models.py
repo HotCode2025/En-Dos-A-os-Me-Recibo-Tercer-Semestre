@@ -33,6 +33,31 @@ class ClientesModels:
             print(f"Error al leer clientes: {e}")
             return []
 
+    def getClientePorId(self, cliente_id):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute(
+                    "SELECT id, nombre, documento, email, telefono, direccion, compras, observacion FROM clientes WHERE id = ?",
+                    (cliente_id,)
+                )
+                fila = cursor.fetchone()
+                if fila:
+                    return {
+                        "id": fila[0],
+                        "razon_social": fila[1],
+                        "documento": fila[2] or "",
+                        "email": fila[3] or "",
+                        "telefono": fila[4] or "",
+                        "direccion": fila[5] or "",
+                        "compras": fila[6] or 0,
+                        "observacion": fila[7] or ""
+                    }
+                return None
+        except Exception as e:
+            print(f"Error al leer cliente por id: {e}")
+            return None
+
     def inserterCliente(self, cliente):
         try:
             with db.get_connection() as conexion:
@@ -126,4 +151,18 @@ class ClientesModels:
                 return True
         except Exception as e:
             print(f"Error al actualizar cliente: {e}")
+            return False
+
+    def incrementar_compras(self, cliente_id, cantidad=1):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute(
+                    "UPDATE clientes SET compras = compras + ? WHERE id = ?",
+                    (cantidad, cliente_id)
+                )
+                conexion.commit()
+                return True
+        except Exception as e:
+            print(f"Error al incrementar compras del cliente: {e}")
             return False

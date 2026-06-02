@@ -30,14 +30,10 @@ class ProductosView(ctk.CTkFrame):
         btn_add.pack(side="right", padx=5)
         
         # botón de acciones para añadir categorías. 
-        opciones_menu = ["Categorías"]
-        self.menu_acciones = ctk.CTkOptionMenu(
-            search_frame, 
-            values=opciones_menu,
-            command=self.ejecutar_accion
-        )
-        self.menu_acciones.set("Acciones")
-        self.menu_acciones.pack(side="right", padx=5)
+        # Botón directo para abrir la gestión de categorías
+        self.btn_categoria = ctk.CTkButton(search_frame, text="Categoría", width=120,
+                                           command=self.controlador.abrir_categorias)
+        self.btn_categoria.pack(side="right", padx=5)
         # Contenedor de Tabla
         self.table_container = ctk.CTkScrollableFrame(self, fg_color="#2b2b2b", corner_radius=10)
         self.table_container.pack(fill="both", expand=True, padx=20, pady=10)
@@ -55,7 +51,7 @@ class ProductosView(ctk.CTkFrame):
     # método para controlar las acciones: abrir categoría. 
     
     def ejecutar_accion(self, valor):
-        if valor == "Categorías":
+        if valor in ("Categorías", "Añadir categoría"):
             self.controlador.abrir_categorias()
         
     def renderizar_tabla(self, productos):

@@ -61,6 +61,7 @@ def crearTablasDB():
             uuid TEXT UNIQUE NOT NULL,
             id_cliente INTEGER,
             id_vendedor INTEGER,
+            tipo_factura TEXT DEFAULT 'A',
             total REAL NOT NULL DEFAULT 0,
             fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (id_cliente) REFERENCES clientes(id),
@@ -89,3 +90,10 @@ def crearTablasDB():
             FOREIGN KEY (id_venta) REFERENCES ventas(id) ON DELETE CASCADE
         );
     """)
+
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA table_info(ventas)")
+    columnas = [row[1] for row in cursor.fetchall()]
+    if "tipo_factura" not in columnas:
+        cursor.execute("ALTER TABLE ventas ADD COLUMN tipo_factura TEXT DEFAULT 'A'")
+        conn.commit()
