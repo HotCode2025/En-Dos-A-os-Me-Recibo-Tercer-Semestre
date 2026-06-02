@@ -25,7 +25,7 @@ class AgregarCliente(ctk.CTkToplevel):
         ctk.CTkLabel(self.main_container, text="Datos del Cliente", font=("Arial", 18, "bold")).grid(row=0, column=0, pady=(0, 15), sticky="w")
 
         self.entry_nombre = self._crear_campo("Razón social:", 1)
-        self.entry_documento = self._crear_campo("Documento:", 2)
+        self.entry_documento = self._crear_campo("DNI/CUIT:", 2)
         self.entry_email = self._crear_campo("Email:", 3)
         self.entry_telefono = self._crear_campo("Teléfono:", 4)
         self.entry_direccion = self._crear_campo("Dirección:", 5)

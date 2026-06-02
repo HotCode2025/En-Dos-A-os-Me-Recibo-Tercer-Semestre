@@ -39,17 +39,16 @@ class CategoriasView(ctk.CTkToplevel):
         for widget in self.table_frame.winfo_children():
             widget.destroy()
             
-        headers = ["ID", "Descripción", "Observación", "Acciones"]
+        headers = ["ID", "Descripción", "Acciones"]
         for i, header in enumerate(headers):
             ctk.CTkLabel(self.table_frame, text=header, font=("Arial", 12, "bold")).grid(row=0, column=i, padx=10, pady=5, sticky="w")
-            
+
         for index, cat in enumerate(self.categorias, start=1):
             ctk.CTkLabel(self.table_frame, text=str(cat.get("id"))).grid(row=index, column=0, padx=10, pady=5, sticky="w")
             ctk.CTkLabel(self.table_frame, text=cat.get("descripcion", "")).grid(row=index, column=1, padx=10, pady=5, sticky="w")
-            ctk.CTkLabel(self.table_frame, text=cat.get("observacion", "")).grid(row=index, column=2, padx=10, pady=5, sticky="w")
-            
+
             action_frame = ctk.CTkFrame(self.table_frame, fg_color="transparent")
-            action_frame.grid(row=index, column=3, padx=5, pady=5)
+            action_frame.grid(row=index, column=2, padx=5, pady=5)
             
             btn_edit = ctk.CTkButton(action_frame, text="✎", width=30, fg_color="#1f538d", command=lambda c=cat: self.editar_categoria(c))
             btn_edit.pack(side="left", padx=2)
@@ -61,22 +60,20 @@ class CategoriasView(ctk.CTkToplevel):
         self.categoria_edicion_id = cat["id"]
         self.entry_desc.delete(0, "end")
         self.entry_desc.insert(0, cat.get("descripcion", ""))
-        self.entry_obs.delete(0, "end")
-        self.entry_obs.insert(0, cat.get("observacion", "") or "")
-        
         self.btn_guardar.configure(text="Actualizar")
         self.btn_cancelar.grid()
         
     def limpiar_formulario(self):
         self.categoria_edicion_id = None
         self.entry_desc.delete(0, "end")
-        self.entry_obs.delete(0, "end")
         self.btn_guardar.configure(text="Agregar")
         self.btn_cancelar.grid_remove()
 
     def guardar_categoria(self):
+        print('DEBUG: guardar_categoria invoked')
         desc = self.entry_desc.get().strip()
-        obs = self.entry_obs.get().strip()
+        obs = ""
+        print(f'DEBUG: desc="{desc}" obs="{obs}" id={self.categoria_edicion_id}')
         
         if not desc:
             messagebox.showwarning("Atención", "La descripción es obligatoria")

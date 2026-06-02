@@ -14,9 +14,10 @@ class ConfiguracionView(ctk.CTkFrame):
         form_frame.grid_columnconfigure(1, weight=1)
 
         self.entry_razon = self._crear_campo(form_frame, "Razón social:", 0)
-        self.entry_direccion = self._crear_campo(form_frame, "Dirección:", 1)
-        self.entry_email = self._crear_campo(form_frame, "Email:", 2)
-        self.entry_telefono = self._crear_campo(form_frame, "Teléfono:", 3)
+        self.entry_documento = self._crear_campo(form_frame, "DNI/CUIT:", 1)
+        self.entry_direccion = self._crear_campo(form_frame, "Dirección:", 2)
+        self.entry_email = self._crear_campo(form_frame, "Email:", 3)
+        self.entry_telefono = self._crear_campo(form_frame, "Teléfono:", 4)
 
         if empresa:
             self._cargar_datos(empresa)
@@ -47,10 +48,18 @@ class ConfiguracionView(ctk.CTkFrame):
 
         self.entry_telefono.delete(0, "end")
         self.entry_telefono.insert(0, empresa.get("telefono", ""))
+        
+        # documento (DNI/CUIT)
+        try:
+            self.entry_documento.delete(0, "end")
+            self.entry_documento.insert(0, empresa.get("documento", ""))
+        except Exception:
+            pass
 
     def guardar_configuracion(self):
         datos_empresa = {
             "razon_social": self.entry_razon.get().strip(),
+            "documento": self.entry_documento.get().strip(),
             "direccion": self.entry_direccion.get().strip(),
             "email": self.entry_email.get().strip(),
             "telefono": self.entry_telefono.get().strip(),

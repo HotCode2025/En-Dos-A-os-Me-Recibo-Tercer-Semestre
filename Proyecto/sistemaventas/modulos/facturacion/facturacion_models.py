@@ -74,6 +74,8 @@ class FacturacionModels:
 				y -= 16
 				canvas_obj.drawString(margin, y, f"Dirección: {empresa.get('direccion', '')}")
 				y -= 16
+				canvas_obj.drawString(margin, y, f"DNI/CUIT: {empresa.get('documento', '')}")
+				y -= 16
 				canvas_obj.drawString(margin, y, f"Email: {empresa.get('email', '')}   Tel: {empresa.get('telefono', '')}")
 				y -= 24
 			else:
@@ -88,7 +90,7 @@ class FacturacionModels:
 
 			canvas_obj.drawString(margin, y, f"Cliente: {cliente_nombre}")
 			y -= 16
-			canvas_obj.drawString(margin, y, f"DNI/CIUT: {cliente_documento}")
+			canvas_obj.drawString(margin, y, f"DNI/CUIT: {cliente_documento}")
 			y -= 16
 			canvas_obj.drawString(margin, y, f"Email: {cliente_email}")
 			y -= 16

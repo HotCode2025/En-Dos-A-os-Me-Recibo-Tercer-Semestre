@@ -154,3 +154,13 @@ class ProductosModels:
         except Exception as e:
             print(f"Error al buscar productos: {e}")
             return []
+
+    def eliminarProducto(self, producto_id):
+        try:
+            with db.get_connection() as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("DELETE FROM productos WHERE id = ?", (producto_id,))
+                conexion.commit()
+                return True, "Producto eliminado."
+        except Exception as e:
+            return False, f"Error al eliminar producto: {e}"

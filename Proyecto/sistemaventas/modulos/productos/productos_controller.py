@@ -80,8 +80,20 @@ class ProductosController:
     
         
     def eliminar_producto(self, producto):
-        print(producto)
-        print("eliminar producto")
+        # producto here is the producto_id passed from the view
+        producto_id = producto
+        if not messagebox.askyesno("Confirmar", "¿Seguro que desea eliminar este producto?"):
+            return
+
+        exito, mensaje = self.productosModels.eliminarProducto(producto_id)
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            # Refrescar lista y vista
+            self.productos = self.obtener_lista_productos()
+            if self.productosVista:
+                self.productosVista.refresh(self.productos)
+        else:
+            messagebox.showerror("Error", mensaje)
         
     
         

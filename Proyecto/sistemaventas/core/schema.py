@@ -8,6 +8,7 @@ def crearTablasDB():
         CREATE TABLE IF NOT EXISTS empresa (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             razon_social TEXT NOT NULL,
+            documento TEXT,
             direccion TEXT,
             email TEXT,
             telefono TEXT
@@ -96,4 +97,10 @@ def crearTablasDB():
     columnas = [row[1] for row in cursor.fetchall()]
     if "tipo_factura" not in columnas:
         cursor.execute("ALTER TABLE ventas ADD COLUMN tipo_factura TEXT DEFAULT 'A'")
+        conn.commit()
+    # Añadir columna 'documento' a empresa si no existe (DNI/CUIT)
+    cursor.execute("PRAGMA table_info(empresa)")
+    cols_empresa = [row[1] for row in cursor.fetchall()]
+    if "documento" not in cols_empresa:
+        cursor.execute("ALTER TABLE empresa ADD COLUMN documento TEXT")
         conn.commit()
