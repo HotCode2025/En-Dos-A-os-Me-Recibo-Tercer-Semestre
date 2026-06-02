@@ -2,7 +2,7 @@
 import customtkinter as ctk
 
 class DashboardView(ctk.CTkFrame):
-    def __init__(self, master, controlador):
+    def __init__(self, master, controlador, estadisticas):
         super().__init__(master, fg_color="transparent") 
         self.controlador = controlador
         
@@ -26,6 +26,10 @@ class DashboardView(ctk.CTkFrame):
         self.cards_frame.grid_columnconfigure(1, weight=1)
         self.cards_frame.grid_columnconfigure(2, weight=1)
 
+        # Formatear valores. Esto se hace para valores altos y sean legibles de manera adecuada los números. 
+        ventas_str = f"{estadisticas['ventas']:,}"
+        clientes_str = f"{estadisticas['clientes']:,}"
+        productos_str = f"{estadisticas['productos']:,}"
 
         # Crear tarjeta 1: Cantidad de Ventas
         self.crear_tarjeta(
@@ -33,7 +37,7 @@ class DashboardView(ctk.CTkFrame):
             row=0, 
             column=0, 
             titulo="Cantidad de Ventas", 
-            valor=12, 
+            valor=ventas_str, 
             color_borde="#2ecc71" # Verde
         )
 
@@ -43,7 +47,7 @@ class DashboardView(ctk.CTkFrame):
             row=0, 
             column=1, 
             titulo="Total de Clientes", 
-            valor=5, 
+            valor=clientes_str, 
             color_borde="#3498db" # Azul
         )
 
@@ -53,7 +57,7 @@ class DashboardView(ctk.CTkFrame):
             row=0, 
             column=2, 
             titulo="Productos en Stock", 
-            valor=150, 
+            valor=productos_str, 
             color_borde="#f1c40f" # Amarillo
         )
 
