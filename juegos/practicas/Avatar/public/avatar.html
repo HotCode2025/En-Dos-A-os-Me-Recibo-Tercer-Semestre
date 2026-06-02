@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Define la codificación de caracteres -->
     <meta charset="UTF-8">
+
+    <!-- Ajusta la vista en dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título que aparece en la pestaña del navegador -->
     <title>LA LEYENDA DE AANG: AVATAR</title>
     
 </head>
 <body>
-    <H1>AVATAR 🔥💧🌱🌪️</H1>   <!--Esto es estatico, No cambia, el h1 se utiliza UNA VEZ  -->
-   <section id= "seleccionar-personaje"> 
+    <!-- Título principal de la página, es único -->
+    <H1>AVATAR 🔥💧🌱🌪️</H1>
+
+   <!-- Sección para elegir el personaje -->
+   <section id="seleccionar-personaje"> 
         <h2>Elige tu Personaje</h2>
 
+        <!-- Opción de personaje Zuko -->
         <label for="zuko">Zuko</label> 
         <input type="radio" name="personaje" id="zuko"/>
 
+        <!-- Opción de personaje Katara -->
         <label for="katara">Katara</label> 
         <input type="radio" name="personaje" id="katara"/>
 
+        <!-- Opción de personaje Aang -->
         <label for="aang">Aang</label> 
         <input type="radio" name="personaje" id="aang"/>
 
+        <!-- Opción de personaje Toph -->
         <label for="toph">Toph</label> 
         <input type="radio" name="personaje" id="toph"/>
 
-
-        <button id="boton-personaje">Seleccionar</button> <!-- Este boton es para seleccionar los personajes -->
+        <!-- Botón para confirmar la selección del personaje -->
+        <button id="boton-personaje">Seleccionar</button>
 
    </section>
 
+   <!-- Sección donde se eligen los ataques -->
    <section id="seleccionar-ataque">
-        <h2>Elige tu ataque</h2> <!--  Se puede usar varias veces-->
-        <p>Tu personaje tiene <span>3</span> vidas</p>
-        <p>Los personajes del enemigo tienen <span>3</span> vidas</p>
+        <h2>Elige tu ataque</h2>
+
+        <!-- Muestra el personaje elegido por el jugador y sus vidas -->
+        <p>Tu personaje  <span id="personaje-jugador"></span> tiene <span>3</span> vidas</p>
+
+        <!-- Muestra el personaje enemigo y sus vidas -->
+        <p>El personaje  <span id="personaje-enemigo"></span> del enemigo tienen <span>3</span> vidas</p>
+
+        <!-- Botones de ataque disponibles -->
         <p>
             <button id="boton-fuego">Fuego 🔥</button>
             <button id="boton-agua">Agua 💧</button>
@@ -40,13 +59,17 @@
         </p>
    </section>
 
-   <section id="mensajes"> <!-- Parrafo dinamico -->
-    <p>Tu personaje atacó con todo el poder del Fuego, el personaje del enemigo atacó con el medio poder de la TIERRA - GANASTE 🎉 </p>
+   <!-- Sección donde se mostrarán los mensajes del juego -->
+   <section id="mensajes">
+    <p>Tu personaje atacó con todo el poder del Fuego, el personaje del enemigo atacó con el medio poder de la TIERRA - GANASTE 🎉</p>
    </section>
 
+   <!-- Sección con botón para reiniciar el juego -->
    <section id="reiniciar">
         <button id="boton-reiniciar">Reiniciar</button>
    </section>
-   <script src="/public/js/avatar.js"></script>
+
+   <!-- Enlace al archivo JavaScript que contiene la lógica -->
+   <script src="/js/avatar.js"></script>
 </body>
 </html>
