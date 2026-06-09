@@ -11,7 +11,7 @@ function seleccionarPersonajeJugador() {
 
     // Se verifica cuál personaje está seleccionado y se muestra su nombre
     if (inputZuko.checked) {
-        spanPersonajeJugador.innerHTML = 'Zuco'
+        spanPersonajeJugador.innerHTML = 'Zuko'
     } else if (inputKatara.checked) {
         spanPersonajeJugador.innerHTML = 'Katara'
     } else if (inputAang.checked) {
