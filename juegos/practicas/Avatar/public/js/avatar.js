@@ -1,15 +1,28 @@
-// Esta función se ejecuta cuando el usuario hace click en el botón para elegir su personaje
+let ataqueJugador;
+let ataqueEnemigo;
+
+function iniciarJuego(){
+
+    let botonPunio = document.getElementById('boton-punio')
+    botonPunio.addEventListener('click', ataquePunio)
+
+    let botonPatada = document.getElementById('boton-patada')
+    botonPatada.addEventListener('click', ataquePatada)
+
+    let botonBarrida = document.getElementById('boton-barrida')
+    botonBarrida.addEventListener('click', ataqueBarrida)
+
+}
+
+// selección de personaje
 function seleccionarPersonajeJugador() {
-    // Se obtienen los elementos de cada opción de personaje
     let inputZuko = document.getElementById('zuko');
     let inputKatara = document.getElementById('katara');
     let inputAang = document.getElementById('aang');
     let inputToph = document.getElementById('toph');
 
-    // Se obtiene el lugar donde se va a mostrar el personaje elegido por el jugador
     let spanPersonajeJugador = document.getElementById('personaje-jugador')
 
-    // Se verifica cuál personaje está seleccionado y se muestra su nombre
     if (inputZuko.checked) {
         spanPersonajeJugador.innerHTML = 'Zuko'
     } else if (inputKatara.checked) {
@@ -19,33 +32,96 @@ function seleccionarPersonajeJugador() {
     } else if (inputToph.checked) {
         spanPersonajeJugador.innerHTML = 'Toph'
     } else {
-        // Si no se eligió ningún personaje, se muestra un mensaje y se detiene la función
         alert('Por favor seleccioná un personaje');
         return;
     }
 
-    // Luego de elegir el personaje del jugador, se llama a la función del enemigo
     seleccionarPersonajeEnemigo();
 }
 
+// ataques
+function ataquePunio(){
+    ataqueJugador = 'punio'
+    ataqueAleatorioEnemigo()
+}
+function ataquePatada(){
+    ataqueJugador = 'patada'
+    ataqueAleatorioEnemigo()
+}
+function ataqueBarrida(){
+    ataqueJugador = 'barrida'
+    ataqueAleatorioEnemigo()
+}
 
-// Esta función elige un personaje al azar para el enemigo
+function ataqueAleatorioEnemigo(){
+    let ataqueAleatorio = aleatorio (1, 3)
+
+    if(ataqueAleatorio == 1){
+        ataqueEnemigo = 'punio'
+    }
+    else if (ataqueAleatorio == 2){
+        ataqueEnemigo = 'patada'
+    }
+    else {
+        ataqueEnemigo = 'barrida'
+    }
+
+    combate()
+}
+
+function combate(){
+    if (ataqueEnemigo == ataqueJugador) {
+        crearMensaje("EMPATE");
+    } 
+    else if (ataqueJugador == 'punio' && ataqueEnemigo == 'barrida') {
+        crearMensaje("GANASTE");
+    } 
+    else if (ataqueJugador == 'patada' && ataqueEnemigo == 'punio') {
+        crearMensaje("GANASTE");
+    } 
+    else if (ataqueJugador == 'barrida' && ataqueEnemigo == 'patada') {
+        crearMensaje("GANASTE");
+    } 
+    else {
+        crearMensaje("PERDISTE");
+    }
+}
+
+function crearMensaje (resultado){
+    let sectionMensajes = document.getElementById('mensajes')
+    let parrafo = document.createElement('p')
+
+    parrafo.innerHTML = 'Tu personaje atacó con ' + ataqueJugador + 
+    ', el personaje del enemigo atacó con ' + ataqueEnemigo + 
+    ' ' + resultado
+
+    sectionMensajes.appendChild(parrafo)
+}
+
+// enemigo
 function seleccionarPersonajeEnemigo() {
-    // Se crea una lista con los nombres de los personajes posibles
     let personajes = ['Zuko', 'Katara', 'Aang', 'Toph'];
-
-    // Se genera un número al azar dentro del rango de la lista
     let random = Math.floor(Math.random() * personajes.length);
 
-    // Se muestra el personaje elegido en la parte del enemigo
     document.getElementById('personaje-enemigo').innerHTML = personajes[random];
 }
 
+// función aleatoria
+function aleatorio(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
-
-
-// Se obtiene el botón que sirve para confirmar la selección del personaje
+// botón personaje
 let botonPersonajeJugador = document.getElementById('boton-personaje');
-
-// Se indica que al hacer click en el botón se ejecute la función de selección del jugador
 botonPersonajeJugador.addEventListener('click', seleccionarPersonajeJugador);
+
+// ✅ BOTON REINICIAR (AGREGADO)
+function reiniciarJuego() {
+    location.reload();
+}
+
+let botonReiniciar = document.getElementById('boton-reiniciar');
+botonReiniciar.addEventListener('click', reiniciarJuego);
+
+// iniciar juego
+iniciarJuego();
