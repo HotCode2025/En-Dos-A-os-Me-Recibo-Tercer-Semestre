@@ -1,5 +1,7 @@
 let ataqueJugador;
 let ataqueEnemigo;
+let vidasJugador = 3;
+let vidasEnemigo = 3;
 
 function iniciarJuego(){
 
@@ -74,17 +76,24 @@ function combate(){
         crearMensaje("EMPATE");
     } 
     else if (ataqueJugador == 'punio' && ataqueEnemigo == 'barrida') {
+        vidasEnemigo--;
         crearMensaje("GANASTE");
     } 
     else if (ataqueJugador == 'patada' && ataqueEnemigo == 'punio') {
+        vidasEnemigo--;
         crearMensaje("GANASTE");
     } 
     else if (ataqueJugador == 'barrida' && ataqueEnemigo == 'patada') {
+        vidasEnemigo--;
         crearMensaje("GANASTE");
     } 
     else {
+        vidasJugador--;
         crearMensaje("PERDISTE");
     }
+
+    actualizarVidas();
+    revisarFinDeJuego();
 }
 
 function crearMensaje (resultado){
@@ -93,9 +102,28 @@ function crearMensaje (resultado){
 
     parrafo.innerHTML = 'Tu personaje atacó con ' + ataqueJugador + 
     ', el personaje del enemigo atacó con ' + ataqueEnemigo + 
-    ' ' + resultado
+    '. ' + resultado
 
     sectionMensajes.appendChild(parrafo)
+}
+
+function actualizarVidas() {
+    document.getElementById('vidas-jugador').innerHTML = vidasJugador;
+    document.getElementById('vidas-enemigo').innerHTML = vidasEnemigo;
+}
+
+function revisarFinDeJuego() {
+    if (vidasJugador === 0 || vidasEnemigo === 0) {
+        let mensajeFinal = vidasJugador === 0 ? '¡Perdiste el juego!' : '¡Ganaste el juego!';
+        crearMensaje(mensajeFinal);
+        finalizarJuego();
+    }
+}
+
+function finalizarJuego() {
+    document.getElementById('boton-punio').disabled = true;
+    document.getElementById('boton-patada').disabled = true;
+    document.getElementById('boton-barrida').disabled = true;
 }
 
 // enemigo
