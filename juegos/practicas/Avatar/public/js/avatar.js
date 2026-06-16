@@ -72,6 +72,11 @@ function ataqueAleatorioEnemigo(){
 }
 
 function combate(){
+
+    let spanvidasJugador = document.getElementById('vidas-jugador')
+    let spanvidasEnemigo = document.getElementById('vidas-enemigo')
+
+    //COMBATE 
     if (ataqueEnemigo == ataqueJugador) {
         crearMensaje("EMPATE");
     } 
@@ -90,6 +95,8 @@ function combate(){
     else {
         vidasJugador--;
         crearMensaje("PERDISTE");
+        
+        spanvidasJugador.innerHTML = vidasJugador
     }
 
     actualizarVidas();
