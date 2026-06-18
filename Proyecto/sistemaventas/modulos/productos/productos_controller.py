@@ -1,0 +1,142 @@
+import tkinter.messagebox as messagebox
+import uuid
+from modulos.productos.productos_view import ProductosView
+from .agregar_productos_view import agregarProducto
+from .productos_models import ProductosModels
+from .categoria_view import CategoriasView
+
+class ProductosController:
+    def __init__(self, contenedor_derecho):
+        # Guardamos la referencia de dónde se va a mostrar
+        self.contenedor = contenedor_derecho
+        self.productosVista = None
+        self.productosModels = ProductosModels()
+        
+        # array para los productos. 
+        self.productos = []
+    # Métodos para gestionar las Categorías
+    
+    def abrir_categorias(self):
+        categorias = self.productosModels.getCategorias()
+        CategoriasView(self.contenedor.winfo_toplevel(), self, categorias)
+        
+    def guardar_categoria(self, datos, vista_categoria):
+        if datos.get("id"):
+            exito, mensaje = self.productosModels.actualizarCategoria(datos["id"], datos["descripcion"], datos["observacion"])
+        else:
+            exito, mensaje = self.productosModels.insertarCategoria(datos["descripcion"], datos["observacion"])
+            
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            # Refrescar vista
+            vista_categoria.refresh(self.productosModels.getCategorias())
+        else:
+            messagebox.showerror("Error", mensaje)
+
+    def eliminar_categoria(self, id_categoria, vista_categoria):
+        exito, mensaje = self.productosModels.eliminarCategoria(id_categoria)
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            vista_categoria.refresh(self.productosModels.getCategorias())
+        else:
+            messagebox.showerror("Error", mensaje)
+        
+    # métodos para gestionar los productos. 
+    def mostrarProductos(self):
+        # 1. Limpiar el contenedor cada vez que se carga una vista nueva
+        for widget in self.contenedor.winfo_children():
+            widget.destroy()
+
+        # traemos los productos del modelo
+        self.productos = self.obtener_lista_productos()
+ 
+        # 2. Crear la vista pasándole el contenedor como 'master'
+        self.productosVista = ProductosView(self.contenedor, self, self.productos)
+        # 3. Mostrarla ocupando todo el espacio
+        self.productosVista.pack(fill="both", expand=True)
+
+    
+    def abrirFormularioRegistro(self):
+        listaCategoria = self.productosModels.getCategorias()
+
+        # Si no hay categorías, abrir la vista de categorías primero
+        if not listaCategoria:
+            messagebox.showinfo("Atención", "No existen categorías. Agregue una categoría antes de crear productos.")
+            self.abrir_categorias()
+            return
+
+        # Creamos la ventana emergente y le pasamos el método que guardará los datos
+        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarNuevoProducto, listaCategoria)
+
+    def editar_producto(self, producto_id):
+        producto_a_editar = next((p for p in self.productos if p["id"] == producto_id), None)
+        if not producto_a_editar:
+            return
+        listaCategoria = [
+            {"id": c[0], "descripcion": c[1]} if isinstance(c, (tuple, list)) else c
+            for c in self.productosModels.getCategorias()
+        ]
+        self.ventana_formulario = agregarProducto(self.contenedor.winfo_toplevel(), self.guardarEdicionProducto,listaCategoria, producto_a_editar)
+    
+        
+    def eliminar_producto(self, producto):
+        # producto here is the producto_id passed from the view
+        producto_id = producto
+        if not messagebox.askyesno("Confirmar", "¿Seguro que desea eliminar este producto?"):
+            return
+
+        exito, mensaje = self.productosModels.eliminarProducto(producto_id)
+        if exito:
+            messagebox.showinfo("Éxito", mensaje)
+            # Refrescar lista y vista
+            self.productos = self.obtener_lista_productos()
+            if self.productosVista:
+                self.productosVista.refresh(self.productos)
+        else:
+            messagebox.showerror("Error", mensaje)
+        
+    
+        
+    # Métodos rest. 
+    def guardarNuevoProducto(self, producto):
+        # Asegurar UUID (la tabla exige uuid NOT NULL UNIQUE)
+        if not producto.get('uuid'):
+            producto['uuid'] = str(uuid.uuid4())
+
+        exito = self.productosModels.inserterProducto(producto)
+        if exito:
+            messagebox.showinfo("Éxito", "Producto insertado correctamente.")
+            # Refrescar lista y vista
+            self.productos = self.obtener_lista_productos()
+            if self.productosVista:
+                self.productosVista.refresh(self.productos)
+        else:
+            messagebox.showerror("Error", "No se pudo insertar el producto. Revisa la consola para más detalles.")
+    
+    def obtener_lista_productos(self):
+        """Método centralizado para obtener datos"""
+        # Aquí en un futuro se puede añadir lógica extra (filtros, logs, validaciones)
+        return self.productosModels.getProductos()
+    
+    def guardarEdicionProducto(self, producto):
+        exito = self.productosModels.actualizarProducto(producto)
+        if exito:
+            messagebox.showinfo("Éxito", "Producto actualizado con éxito.")
+            todos_los_productos = self.productosModels.getProductos()
+            self.productosVista.refresh(todos_los_productos)
+        else:
+            messagebox.showerror("Error", "No se pudo actualizar el producto.")
+    
+    def buscarProductos(self, texto):
+        texto = texto.strip()  # saca espacios al principio y al final
+        
+        if texto == "":
+            # Si el campo está vacío, mostrar todos
+            productos = self.obtener_lista_productos()
+        else:
+            productos = self.productosModels.buscarProductos(texto)
+        
+        # Refrescar la tabla con los resultados
+        if self.productosVista:
+            self.productosVista.refresh(productos)
+    
